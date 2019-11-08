@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Realtime Messaging",
+  "name": "Realtime Messaging Application Web Client",
   "icons": [
     {
       "src": "favicon.ico",
