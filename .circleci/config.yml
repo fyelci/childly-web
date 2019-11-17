@@ -12,7 +12,7 @@ jobs:
             - yarn-packages-{{ checksum "package.json" }}
       - run:
           name: Clone Server
-          command: git clone https://github.com/fyelci/childly-server.git --branch master-step14 --single-branch ../childly-server
+          command: git clone https://github.com/fyelci/childly-server.git ../childly-server
       - run:
           name: Install Dependencies
           command: yarn
