@@ -34,6 +34,7 @@ const SendButton = styled(Button)`
   margin-right: 0 !important;
   color: white !important;
   padding-left: 20px !important;
+
   svg {
     margin-left: -3px;
   }
@@ -45,26 +46,32 @@ interface MessageInputProps {
 
 const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
   const [message, setMessage] = useState('');
+
   const onKeyPress = (e: any) => {
     if (e.charCode === 13) {
       submitMessage();
     }
   };
+
   const onChange = ({ target }: any) => {
     setMessage(target.value);
   };
+
   const submitMessage = () => {
     if (!message) return;
+
     setMessage('');
+
     if (typeof onSendMessage === 'function') {
       onSendMessage(message);
     }
   };
+
   return (
     <Container>
       <ActualInput
-        type="text"
         data-testid="message-input"
+        type="text"
         placeholder="Type a message"
         value={message}
         onKeyPress={onKeyPress}

@@ -1,29 +1,34 @@
 import React from 'react';
-import moment from 'moment';
+import { format, parseISO, isDate } from 'date-fns';
 import { List, ListItem } from '@material-ui/core';
 import styled from 'styled-components';
 import { useCallback } from 'react';
 import { History } from 'history';
 import { useChatsQuery } from '../../graphql/types';
+import { useGetChatPrefetch } from '../ChatRoomScreen';
 
 const Container = styled.div`
   height: calc(100% - 56px);
   overflow-y: overlay;
 `;
+
 const StyledList = styled(List)`
   padding: 0 !important;
 `;
+
 const StyledListItem = styled(ListItem)`
   height: 76px;
   padding: 0 15px;
   display: flex;
 `;
+
 const ChatPicture = styled.img`
   height: 50px;
   width: 50px;
   object-fit: cover;
   border-radius: 50%;
 `;
+
 const ChatInfo = styled.div`
   width: calc(100% - 60px);
   height: 46px;
@@ -32,9 +37,11 @@ const ChatInfo = styled.div`
   border-bottom: 0.5px solid silver;
   position: relative;
 `;
+
 const ChatName = styled.div`
   margin-top: 5px;
 `;
+
 const MessageContent = styled.div`
   color: gray;
   font-size: 15px;
@@ -43,6 +50,7 @@ const MessageContent = styled.div`
   overflow: hidden;
   white-space: nowrap;
 `;
+
 const MessageDate = styled.div`
   position: absolute;
   color: gray;
@@ -56,16 +64,16 @@ interface ChatsListProps {
 }
 
 const ChatsList: React.FC<ChatsListProps> = ({ history }) => {
-
   const navToChat = useCallback(
     chat => {
       history.push(`chats/${chat.id}`);
     },
     [history]
   );
+  const prefetchChat = useGetChatPrefetch();
 
   const { data } = useChatsQuery();
-  
+
   if (data === undefined || data.chats === undefined) {
     return null;
   }
@@ -79,7 +87,10 @@ const ChatsList: React.FC<ChatsListProps> = ({ history }) => {
             key={chat.id}
             data-testid="chat"
             button
-            onClick={navToChat.bind(null, chat)}>
+            onClick={navToChat.bind(null, chat)}
+            onMouseEnter={() => {
+              prefetchChat(chat.id);
+            }}>
             <ChatPicture
               data-testid="picture"
               src={chat.picture}
@@ -92,9 +103,9 @@ const ChatsList: React.FC<ChatsListProps> = ({ history }) => {
                   <MessageContent data-testid="content">
                     {chat.lastMessage.content}
                   </MessageContent>
-                  <MessageDate data-testid="date">
-                    {moment(chat.lastMessage.createdAt).format('HH:mm')}
-                  </MessageDate>
+                  {chat.createdAt && <MessageDate data-testid="date">
+                    {format(isDate(chat.createdAt) ? chat.createdAt : parseISO(chat.createdAt), 'HH:mm')}
+                  </MessageDate>}
                 </React.Fragment>
               )}
             </ChatInfo>

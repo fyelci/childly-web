@@ -13,6 +13,7 @@ describe('MessagesList', () => {
   afterEach(cleanup);
 
   const time = new Date('1 Jan 2019 GMT');
+
   it('renders messages data', () => {
     const messages = [
       {
@@ -39,6 +40,7 @@ describe('MessagesList', () => {
 
     expect(getByTestId(message1, 'message-content')).toHaveTextContent('foo');
     expect(getByTestId(message1, 'message-date')).toHaveTextContent('00:00');
+
     expect(getByTestId(message2, 'message-content')).toHaveTextContent('bar');
     expect(getByTestId(message2, 'message-date')).toHaveTextContent('00:00');
   });

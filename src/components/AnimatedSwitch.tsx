@@ -26,6 +26,7 @@ const MyAnimatedSwitch = styled(SwitchComponent).attrs(() => ({
   overflow: hidden;
   height: 100vh;
   width: 100vw;
+
   > div {
     position: absolute;
     overflow: hidden;

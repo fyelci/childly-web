@@ -1,4 +1,4 @@
-schema: ../realtime-messaging-app-server/src/schema/typeDefs.graphql
+schema: ../childly-server/modules/*/index.ts
 documents: './src/**/*.{tsx,ts}'
 overwrite: true
 generates:

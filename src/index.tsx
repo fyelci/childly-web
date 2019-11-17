@@ -13,6 +13,7 @@ const theme = createMuiTheme({
     secondary: { main: '#6fd056' },
   },
 });
+
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <ApolloProvider client={client}>
